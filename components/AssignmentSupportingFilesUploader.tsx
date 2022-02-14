@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef }  from "react"
 import { useDrag, useDrop, DndProvider } from 'react-dnd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFile, faUpload} from '@fortawesome/pro-duotone-svg-icons'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import Dropzone from 'react-dropzone'
 import { useLayoutDispatch, useLayoutState } from "../contexts/layout";
@@ -71,7 +70,7 @@ function File({fileObject, folder}){
         <FileWrap existing={existing} file={file}>
             <div className='flex flex-row items-center space-x-2 truncate'>
                 <div className="w-3 text-gray-600 mx-1">
-                    <FontAwesomeIcon icon={faFile} />
+                    <FontAwesomeIcon icon={['fad', 'file']} />
                 </div>
                 <div className="text-gray-700 font-medium text-sm w-fit truncate ...">
                     {path}
@@ -96,7 +95,7 @@ function DockingFile({files,file,setFiles}){
             <div className="flex flex-row px-2 py-1 border border-gray-300 bg-gray-200 hover:shadow-md transition-all duration-350 ease-in-out justify-between rounded items-center gap-x-1 w-full" ref={drag}>
                 <div className='flex flex-row items-center space-x-2 truncate'>
                     <div className="w-3 text-gray-600 mx-1">
-                        <FontAwesomeIcon icon={faFile} />
+                        <FontAwesomeIcon icon={['far', 'file']} />
                     </div>
                     <div className="text-gray-700 font-medium text-sm w-fit truncate ...">
                         {file.path}
@@ -404,7 +403,7 @@ function AssignmentSupportingFilesUploader(){
                                     className="rounded p-10 flex flex-col items-center gap-y-4 cursor-pointer">
                                         <input {...getInputProps()} />
                                         <div className="text-gray-600 text-6xl">
-                                            <FontAwesomeIcon icon={faUpload} />
+                                            <FontAwesomeIcon icon={['fad', 'upload']} />
                                         </div>
                                         <p className="text-center text-gray-600">
                                             Drag and Drop file or click to select files

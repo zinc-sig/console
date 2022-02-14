@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .d2h-file-list-title {
+    @apply hidden;
+  }
+
+  .d2h-icon.d2h-moved {
+    @apply hidden;
+  }
+
+  .d2h-file-name {
+    @apply hidden;
+  }
+
+  .d2h-file-list-line {
+    @apply hidden;
+  }
+
+  .d2h-tag.d2h-moved.d2h-moved-tag {
+    @apply hidden;
+  }
+  .d2h-file-wrapper {
+    @apply rounded-lg;
+  }
+  .d2h-file-header {
+    @apply rounded-tl-lg rounded-tr-lg;
+  }
+
+  .quill {
+    @apply shadow-sm rounded-md;
+  }
+  
+  .ql-toolbar.ql-snow {
+    @apply rounded-t-md bg-gray-50;
+  }
+  
+  .ql-container.ql-snow {
+    @apply rounded-b-md;
+  }
+  
+  .ql-editor {
+    min-height: 320px;
+  }
+
+  .react-datepicker-wrapper {
+    @apply block w-full;
+  }
+
+  .react-datepicker__header {
+    @apply bg-gray-50;
+  }
+
+  .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+    @apply font-sans text-base font-normal text-gray-600;
+  }
+
+  .react-datepicker__day, .react-datepicker__time-list-item {
+    @apply font-sans text-sm text-gray-700;
+  }
+
+  .react-datepicker__day:hover {
+    @apply rounded-full;
+  }
+
+  .react-datepicker {
+    @apply shadow rounded-md border font-sans;
+  }
+
+  .react-datepicker__triangle {
+    @apply border-gray-50;
+  }
+
+  .react-datepicker__day-name {
+    @apply text-xs uppercase font-sans text-gray-500;
+  }
+
+  .react-datepicker__day--selected {
+    @apply bg-cse-600 rounded-full outline-none text-white;
+  }
+
+  .react-datepicker__day--selected:hover {
+    @apply bg-cse-400 rounded-full outline-none;
+  }
+
+  .react-datepicker__day--selected:focus {
+    @apply outline-none;
+  }
+
+  .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+    @apply bg-cse-600 font-sans text-sm text-white font-medium rounded-sm;
+  }
+
+  .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected:hover {
+    @apply bg-cse-400;
+  }
+
+  .ais-Highlight-highlighted { 
+    @apply  font-semibold not-italic underline shadow-sm
+  }
+
+  .badge { 
+    @apply text-white px-2 rounded text-xs font-mono mx-1
+  }
+}
+
+.collapse-css-transition {
+  transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}

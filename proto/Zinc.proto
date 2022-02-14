@@ -1,0 +1,98 @@
+syntax = "proto3";
+// option java_multiple_files = true;
+// option java_package = "io.grpc.examples.zinc";
+// option java_outer_classname = "ZincProto";
+// option objc_class_prefix = "ZINC";
+
+// package helloworld;
+
+// option java_multiple_files = true;
+
+service Zinc{
+    // rpc GradingTask (GradingTaskRequest) returns (GradingTaskReply){}
+    // rpc DoneGrading (DoneGradingRequest) returns (DoneGradingReply){}
+    // rpc ValidateConfig (ValidateConfigRequest) returns (ValidateConfigReply){}
+    rpc GradingTask (GradingTaskRequest) returns (GradingTaskReply){}
+    // rpc DoneGrading (DoneGradingRequest) returns (EmptyReply){}
+    rpc ValidateConfig (ValidateConfigRequest) returns (ValidateConfigResponse){}
+    rpc paySalary (EmployeeRequest) returns (stream EmployeeResponse) {}
+    rpc Notification (Empty) returns (stream NotificationResponse){}
+}
+
+message NotificationResponse{
+    bool student = 1;
+    int32 id = 2;
+    string title = 3;
+    string body = 4;
+}
+
+message Empty{}
+
+message EmployeeRequest {
+  repeated int32 employeeIdList = 1;
+}
+
+message EmployeeResponse{
+  string message = 1;
+}
+
+message EmptyReply{}
+
+message Submission {
+    int32 id = 1;
+    string extracted_path = 2;
+    string created_at = 3;
+}
+
+message GradingTaskRequest{
+    repeated Submission submissions = 1;
+    int32 assignment_config_id = 2;
+    bool isTest = 3;
+    oneof ib{
+        int32 initiatedBy = 4;
+    }
+}
+
+message GradingTaskReply{
+    string message = 1;
+}
+
+message Report{
+    int32 id = 1;
+    int32 submission_id = 2;
+    string pipeline_results = 3;
+}
+
+message DoneGradingRequest{
+    repeated Report reports = 1;
+    int32 assignment_config_id = 2;
+    bool isTest = 3;
+    bool isFinal = 4;
+    oneof ib{
+        int32 initiatedBy = 5;
+    }
+    oneof ce{
+        string configError = 6;
+    }
+    oneof sa{
+        string scheduledAt = 7;
+    }
+    string gradingStartedAt = 8;
+}
+
+message DoneGradingReply{
+
+}
+
+message ValidateConfigRequest{
+    string id = 1;
+    string config_yaml= 2;
+}
+
+message ValidateConfigResponse{
+    bool valid = 1;
+}
+
+message ValidateConfigReply{
+
+}

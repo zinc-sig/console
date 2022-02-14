@@ -1,0 +1,29 @@
+stages:
+  - build
+  - release
+
+
+build-docker-image:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_DRIVER: overlay2
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:latest
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - master
+
+create-sentry-release:
+  stage: release
+  image: getsentry/sentry-cli
+  before_script:
+    - sentry-cli login
+  script:
+    sentry-cli releases new 

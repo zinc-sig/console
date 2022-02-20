@@ -123,8 +123,6 @@ function YAMLConfigEditor({ yamlString }) {
   const [ updatePipelineConfig, { loading: updatingYaml} ] = useMutation(UPDATE_PIPELINE_CONFIG);
 
   async function updateYaml() {
-    dispatch({ type: 'configYAMLUpdate', payload: { assignmentConfigId: parseInt(assignmentConfigId as string, 10) } });
-
     try {
       // const yaml = jsyaml.load(configYaml);
       const { configError } = await validateAssignmentConfig(configYaml, assignmentConfigId);

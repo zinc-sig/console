@@ -8,6 +8,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   NEXT_PUBLIC_UPLOAD_DIR: ${{ secrets.NEXT_PUBLIC_UPLOAD_DIR }}
+  NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
 
 jobs:
   build-and-push-image:

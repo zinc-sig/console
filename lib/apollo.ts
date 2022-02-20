@@ -11,14 +11,14 @@ const endpoint = 'api.oap.ust.dev/v1/graphql';
 
 function createApolloClient(cookie: string) {
   const httpLink = new HttpLink({
-    uri: `https://${endpoint}`, // Server URL (must be absolute)
+    uri: `https://${endpoint}/v1/graphql`, // Server URL (must be absolute)
     credentials: 'include', // Additional fetch() options like `credentials` or `headers`
     headers: {
       cookie
     }
   });
   const wsLink = isBrowser? new WebSocketLink({
-    uri: `wss://${endpoint}`,
+    uri: `wss://${endpoint}/v1/graphql`,
     options: {
       lazy: true,
       reconnect: true,

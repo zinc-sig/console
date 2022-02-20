@@ -15,7 +15,7 @@ export default async function (req:  NextApiRequest, res: NextApiResponse) {
             headers: {
             'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
             },
-            url: process.env.API_URL,
+            url: `https://${process.env.API_URL}/v1/graphql`,
             data: {
             query: 
             `query getUserData($id: bigint!, $semesterId: bigint!) {
@@ -55,7 +55,7 @@ export default async function (req:  NextApiRequest, res: NextApiResponse) {
             headers: {
             'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
             },
-            url: process.env.API_URL,
+            url: `https://${process.env.API_URL}/v1/graphql`,
             data: {
             query: `
                 mutation updateUsers($notification: String!, $id: bigint!) {

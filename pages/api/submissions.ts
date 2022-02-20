@@ -24,7 +24,7 @@ async function submit(cookie: string, submission: Submission) {
       headers: {
         cookie
       },
-      url: process.env.API_URL,
+      url: `https://${process.env.API_URL}/v1/graphql`,
       data: {
         query: `
           mutation addSubmissionEntry($submission: submissions_insert_input!) {

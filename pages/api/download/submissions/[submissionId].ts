@@ -28,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     const { stored_name, upload_name, created_at } = data.submission;
-    const buffer = readFileSync(`${process.env.SHARED_MOUNT_PATH}/`+stored_name);
+    const buffer = readFileSync(`${process.env.NEXT_PUBLIC_UPLOAD_DIR}/`+stored_name);
     res.setHeader('Content-Type','application/octet-stream');
     res.setHeader('Content-Disposition',`attachment; filename=${(new Date(created_at)).getTime()}_${upload_name}`);
     res.send(buffer);

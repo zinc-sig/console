@@ -72,7 +72,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           user_id: userId
         }
         try {
-          copyFile(files.path, `${process.env.UPLOAD_DIR}/${destinationFilename}`, async (err) => {
+          copyFile(files.path, `${process.env.NEXT_PUBLIC_UPLOAD_DIR}/${destinationFilename}`, async (err) => {
             if(!err) {
               await submit(req.headers.cookie!, submission);
               return res.json({

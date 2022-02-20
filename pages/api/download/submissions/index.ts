@@ -24,7 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const zip = new AdmZip();
     const { submissions, assignment } = data.assignmentConfig;
     for(const submission of submissions) {
-      const targetEntry = `${process.env.SHARED_MOUNT_PATH}/${submission.stored_name}`;
+      const targetEntry = `${process.env.NEXT_PUBLIC_UPLOAD_DIR}/${submission.stored_name}`;
       if (existsSync(targetEntry)) {
         zip.addFile(`${submission.user.itsc}/${submission.upload_name}`, readFileSync(targetEntry));
       }

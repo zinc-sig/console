@@ -13,7 +13,7 @@ async function handleAddHelperFiles(req: NextApiRequest, res: NextApiResponse) {
     // const { path: pathParam } = req.query
     // const basePath = path.join(UPLOAD_DIR, ...pathParam)
     const {assignmentConfigId} = req.query
-    const basePath = `/tmp/helpers/${assignmentConfigId}`
+    const basePath = `${process.env.NEXT_PUBLIC_UPLOAD_DIR}/helpers/${assignmentConfigId}`
 
     // clear old upload (may make it configurable later)
     // await fs.rm(basePath, { recursive: true, force: true })
@@ -159,7 +159,7 @@ function createFilesArray(tree, depth){
 async function handleGetHelperFiles(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { assignmentConfigId } = req.query;
-    const path = `${process.env.UPLOAD_DIR}/helpers/${assignmentConfigId}`;
+    const path = `${process.env.NEXT_PUBLIC_UPLOAD_DIR}/helpers/${assignmentConfigId}`;
 
     var folders = [
       {

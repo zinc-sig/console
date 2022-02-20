@@ -8,8 +8,6 @@ import axios from 'axios'
 import { useFilesState, useFilesDispatch } from "../contexts/assignmentSupportingFiles"
 import {useFloating, shift, arrow, getScrollParents} from '@floating-ui/react-dom';
 
-const UPLOAD_DIR = '/tmp/helpers'
-
 interface CachedFile{
     lastModified: number
     name: string
@@ -64,7 +62,7 @@ function File({fileObject, folder}){
     if(!existing)
         path = file.path
     else{
-        path = file.path.replace(UPLOAD_DIR+'/'+assignmentConfigId+'/'+folder.toLowerCase(),'')    
+        path = file.path.replace(process.env.NEXT_PUBLIC_UPLOAD_DIR+'/'+assignmentConfigId+'/'+folder.toLowerCase(),'')    
     }
     return(
         <FileWrap existing={existing} file={file}>

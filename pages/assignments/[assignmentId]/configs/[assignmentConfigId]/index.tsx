@@ -135,7 +135,7 @@ function YAMLConfigEditor({ yamlString }) {
         });
         dispatch({ type: 'configYAMLUpdate', payload: { assignmentConfigId: parseInt(assignmentConfigId as string, 10) } });
       } else {
-        dispatch({ type: 'showNotification', payload: { success: false, title: 'Config Error', message: JSON.stringify(configError)}});
+        dispatch({ type: 'showNotification', payload: { success: false, title: 'Config Error', message: JSON.parse(configError).configFormatError.throwableSummary.message}});
       }
     } catch (error: any) {
       dispatch({ type: 'showNotification', payload: { success: false, title: 'Error', message: error.message}});

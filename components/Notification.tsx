@@ -1,8 +1,7 @@
 import { Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLayoutDispatch, useLayoutState } from "../contexts/layout";
-import { Toast } from "react-hot-toast/dist/core/types"; 
-import toast from "react-hot-toast";
+import { useLayoutDispatch } from "../contexts/layout";
+import { Toast } from "react-hot-toast/dist/core/types";
 
 
 interface NotificationProps {
@@ -11,32 +10,28 @@ interface NotificationProps {
 }
 
 export function Notification({ children, trigger }: NotificationProps) {
-  // const { showNotification } = useLayoutState()
   return (
-    // <div className="max-w-md w-full bg-white shadow-lg rounded-xl pointer-events-auto sm:items-start sm:justify-end">
-      <Transition
-        show={trigger.visible}
-        enter="transform ease-out duration-300 transition"
-        enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-        enterTo="translate-y-0 opacity-100 sm:translate-x-0"
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        className="max-w-md w-full bg-white shadow-lg rounded-xl pointer-events-auto"
-      >
-        <div className="rounded-xl shadow-xs overflow-hidden">
-          <div className="p-4 w-full">
-            { children }
-          </div>
+    <Transition
+      show={trigger.visible}
+      enter="transform ease-out duration-300 transition"
+      enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+      enterTo="translate-y-0 opacity-100 sm:translate-x-0"
+      leave="transition ease-in duration-100"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+      className="max-w-md w-full bg-white shadow-lg rounded-xl pointer-events-auto"
+    >
+      <div className="rounded-xl shadow-xs overflow-hidden">
+        <div className="p-4 w-full">
+          { children }
         </div>
-      </Transition>
-    // </div>
+      </div>
+    </Transition>
   )
 }
 
 export function NotificationBody({id, title, body, success}) {
-  // const dispatch = useLayoutDispatch();
-  // const { notification } = useLayoutState();
+  const dispatch = useLayoutDispatch();
   return (
     <div className="flex items-start">
       <div className="flex-shrink-0">
@@ -58,7 +53,9 @@ export function NotificationBody({id, title, body, success}) {
       </div>
       <div className="ml-4 flex-shrink-0 flex">
         <button
-          onClick={() => toast.dismiss(id)}
+          onClick={() => {
+            dispatch({ type: 'dismissNotification', payload: id });
+          }}
           className="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
           {/* Heroicon name: x */}
           <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

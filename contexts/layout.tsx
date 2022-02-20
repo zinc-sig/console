@@ -51,10 +51,20 @@ function layoutReducer(state: LayoutState, action: LayoutAction): LayoutState {
     case 'closeMobileMenu':
       return {...state, showMobileMenu: false}
     case 'showNotification':
+      toast.custom((t) =>(
+        <Notification trigger={t}>
+          <NotificationBody
+            title={action.payload.title}
+            body={action.payload.message}
+            success={action.payload.success}
+            id={t.id} />
+        </Notification>
+      ));
       return {...state, showNotification: true, notification: action.payload }
     case 'setRegistrationToken':
       return {...state, registrationToken: action.payload }
     case 'dismissNotification':
+      toast.dismiss(action.payload)
       return {...state, showNotification: false}
     case 'assignmentCreated':
       return {...state, showModal: true, assignmentId: action.payload }
@@ -115,14 +125,12 @@ export const LayoutProvider = ({ children }: LayoutProviderProps) => {
   
   const {user, currentSemester} = useZinc();
   const [state, dispatch] = useReducer<React.Reducer<LayoutState, LayoutAction>>(layoutReducer, initialLayoutState)
-  
+
   useEffect(() => {
     setupNotification();
     async function setupNotification() {
       try {
         const token = await firebaseCloudMessaging.init();
-        console.log('after token')
-        console.log(token)
         if(token) {
           const messaging = getMessaging();
           // TODO: call API to fetch lastest notification 
@@ -131,7 +139,6 @@ export const LayoutProvider = ({ children }: LayoutProviderProps) => {
           });
           const noti = await notiRes.json()
           const notification = noti.notification
-          console.log(token, notification)
           // if the fetch token is not the same as DB
           if(token != notification){
             // update the DB one

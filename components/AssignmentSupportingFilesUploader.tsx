@@ -62,7 +62,7 @@ function File({fileObject, folder}){
     if(!existing)
         path = file.path
     else{
-        path = file.path.replace(process.env.NEXT_PUBLIC_UPLOAD_DIR+'/'+assignmentConfigId+'/'+folder.toLowerCase(),'')    
+        path = file.path.replace(`/mnt/zinc/${assignmentConfigId}/folder.toLowerCase()`,'')    
     }
     return(
         <FileWrap existing={existing} file={file}>
@@ -188,15 +188,15 @@ function FileList({existingFiles, name}){
         switch(name){
             case "provided":
                 cachedFiles = provided
-                description = "this is an description for provided"
+                description = "Additional files used for grading"
                 break;
             case "skeleton":
                 cachedFiles = skeleton
-                description = "this is an description for skeleton"
+                description = "Files gave to the students"
                 break;
             case "template":
                 cachedFiles = template
-                description = "this is an description for template"
+                description = "Files that the students need to submit"
                 break;
             default:
                 cachedFiles = []
@@ -225,9 +225,9 @@ function FileList({existingFiles, name}){
 
     return (
         <div className="rounded border bg-gray-100 p-2 shadow flex flex-col space-y-2 w-60" ref={drop} >
-            <div className="uppercase text-gray-600 font-medium mx-1 text-xs">
+            {/* <div className="uppercase text-gray-600 font-medium mx-1 text-xs">
                 {name}
-            </div>
+            </div> */}
             <div className="text-sm text-gray-500 px-1 h-10">
                 {description}
             </div>

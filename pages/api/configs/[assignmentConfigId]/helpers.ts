@@ -40,7 +40,7 @@ async function handleAddHelperFiles(req: NextApiRequest, res: NextApiResponse) {
         arrayData.forEach(async (file) => {
             const destPath = path.join(basePath, file.name)
             await fs.mkdir(path.dirname(destPath), { recursive: true })
-            await fs.rename(file.path, destPath)
+            await fs.copyFile(file.path, destPath)
         })
         res.json(data)
     } catch (err) {

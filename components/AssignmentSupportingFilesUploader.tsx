@@ -62,7 +62,7 @@ function File({fileObject, folder}){
     if(!existing)
         path = file.path
     else{
-        path = file.path.replace(`/mnt/zinc/${assignmentConfigId}/folder.toLowerCase()`,'')    
+        path = file.path.replace(`/mnt/zinc/${assignmentConfigId}/${folder.toLowerCase()}`,'')    
     }
     return(
         <FileWrap existing={existing} file={file}>

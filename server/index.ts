@@ -27,9 +27,9 @@ const port = process.env.PORT || 3000;
         if (err) {
           console.error(err);
         }
-        res.oidc!.logout({ returnTo: '/' });
+        res.oidc!.logout({ returnTo: process.env.POST_LOGOUT_REDIRECT_URI });
       });
-      res.oidc!.logout({ returnTo: '/' });
+      res.oidc!.logout({ returnTo: process.env.POST_LOGOUT_REDIRECT_URI });
 
     });
     server.get('/service-worker.js', (req, res) => {

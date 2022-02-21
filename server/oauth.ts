@@ -79,6 +79,9 @@ const config: ConfigParams = {
     return {
       ...session,
     };
+  },
+  routes: {
+    postLogoutRedirect: process.env.POST_LOGOUT_REDIRECT_URI
   }
 }
 

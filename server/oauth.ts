@@ -37,10 +37,8 @@ const config: ConfigParams = {
         });
       },
       set: (sid, data, callback) => {
-        // console.log(data)
         const key = crypto.createHmac('sha1', process.env.SESSION_SECRET!).update(sid).digest().toString('base64');
         client.set(key, JSON.stringify(data),'EX', 86400, callback)
-        // client.expire(key, 86400)
       },
       destroy: (sid,callback) => {
         const key = crypto.createHmac('sha1', process.env.SESSION_SECRET!).update(sid).digest().toString('base64');
@@ -80,6 +78,7 @@ const config: ConfigParams = {
       ...session,
     };
   },
+  // @ts-ignore
   routes: {
     postLogoutRedirect: process.env.POST_LOGOUT_REDIRECT_URI
   }

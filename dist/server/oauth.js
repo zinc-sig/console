@@ -42,10 +42,8 @@ const config = {
                 });
             },
             set: (sid, data, callback) => {
-                // console.log(data)
                 const key = crypto_1.default.createHmac('sha1', process.env.SESSION_SECRET).update(sid).digest().toString('base64');
                 client.set(key, JSON.stringify(data), 'EX', 86400, callback);
-                // client.expire(key, 86400)
             },
             destroy: (sid, callback) => {
                 const key = crypto_1.default.createHmac('sha1', process.env.SESSION_SECRET).update(sid).digest().toString('base64');
@@ -82,6 +80,10 @@ const config = {
         return {
             ...session,
         };
+    },
+    // @ts-ignore
+    routes: {
+        postLogoutRedirect: process.env.POST_LOGOUT_REDIRECT_URI
     }
 };
 exports.default = (0, express_openid_connect_1.auth)(config);

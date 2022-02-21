@@ -40,7 +40,7 @@
     "directory-tree": "^2.2.5",
     "exceljs": "^4.2.0",
     "express": "^4.17.1",
-    "express-openid-connect": "^2.5.0",
+    "express-openid-connect": "^2.7.0",
     "firebase": "^9.0.2",
     "formidable-serverless": "^1.1.1",
     "fs-extra": "^10.0.0",

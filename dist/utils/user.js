@@ -12,7 +12,7 @@ async function getUserRole(id) {
             headers: {
                 'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
             },
-            url: process.env.API_URL,
+            url: `https://${process.env.API_URL}/v1/graphql`,
             data: {
                 query: `
             query getUserRole($id: bigint!) {
@@ -38,7 +38,7 @@ async function createUser(itsc, name) {
             headers: {
                 'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
             },
-            url: process.env.API_URL,
+            url: `https://${process.env.API_URL}/v1/graphql`,
             data: {
                 query: `
           mutation createUserIfNotExist($itsc:String!, $name:String!) {
@@ -68,7 +68,7 @@ async function getUserData(itsc, name) {
             headers: {
                 'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
             },
-            url: process.env.API_URL,
+            url: `https://${process.env.API_URL}/v1/graphql`,
             data: {
                 query: `
             query getUserData($itsc: String!) {
@@ -120,7 +120,7 @@ async function updateNotification(id, notification) {
             headers: {
                 'X-Hasura-Admin-Secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
             },
-            url: process.env.API_URL,
+            url: `https://${process.env.API_URL}/v1/graphql`,
             data: {
                 query: `
           mutation updateUsers($notification: String!, $id: bigint!) {

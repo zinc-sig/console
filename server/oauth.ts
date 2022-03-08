@@ -8,10 +8,10 @@ const SESSION_VALID_FOR = 8 * 60 * 60 * 1000;
 const client = redis.createClient(parseInt(process.env.REDIS_PORT!, 10),process.env.REDIS_HOST);
 
 const config: ConfigParams = {
-  issuerBaseURL: process.env.CAS_AUTH_BASE_URL,
-  baseURL: `https://${process.env.CONSOLE_APP_HOSTNAME}`,
-  clientID: process.env.CAS_AUTH_CONSOLE_CLIENT_ID,
-  clientSecret: process.env.CAS_AUTH_CONSOLE_CLIENT_SECRET,
+  issuerBaseURL: process.env.OIDC_BASE_URL,
+  baseURL: `https://${process.env.HOSTNAME}`,
+  clientID: process.env.OIDC_CLIENT_ID,
+  clientSecret: process.env.OIDC_CLIENT_SECRET,
   secret: process.env.SESSION_SECRET,
   authorizationParams:{
     response_type: 'code',
@@ -53,7 +53,7 @@ const config: ConfigParams = {
   },
   afterCallback: async (req, res, session) => {
     try {
-      const additionalUserClaims = await axios(process.env.CAS_AUTH_BASE_URL+'/profile', {
+      const additionalUserClaims = await axios(process.env.OIDC_BASE_URL+'/profile', {
         headers:{
           Authorization: 'Bearer ' + session.access_token
         }
@@ -69,7 +69,7 @@ const config: ConfigParams = {
       res.cookie('itsc', sub, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
       res.cookie(
         'client',
-        process.env.CAS_AUTH_CONSOLE_CLIENT_ID,
+        process.env.OIDC_CLIENT_ID,
         { maxAge: SESSION_VALID_FOR, httpOnly: true, domain: `.${process.env.HOSTNAME}` });
     } catch (error) {
       throw error

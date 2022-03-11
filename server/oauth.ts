@@ -47,7 +47,7 @@ const config: ConfigParams = {
     },
     absoluteDuration: SESSION_VALID_FOR,
     cookie: {
-      domain: process.env.HOSTNAME,
+      domain: process.env.HOSTNAME?.replace('console.', ''),
       secure: true,
     }
   },
@@ -64,13 +64,13 @@ const config: ConfigParams = {
       req.appSession!.userIdentity = additionalUserClaims.data;
       const { sub, name } = additionalUserClaims.data;
       const { userId, semesterId } = await getUserData(sub, name!);
-      res.cookie('semester', semesterId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
-      res.cookie('user', userId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
-      res.cookie('itsc', sub, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
+      res.cookie('semester', semesterId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
+      res.cookie('user', userId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
+      res.cookie('itsc', sub, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
       res.cookie(
         'client',
         process.env.OIDC_CLIENT_ID,
-        { maxAge: SESSION_VALID_FOR, httpOnly: true, domain: `.${process.env.HOSTNAME}` });
+        { maxAge: SESSION_VALID_FOR, httpOnly: true, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
     } catch (error) {
       throw error
     }

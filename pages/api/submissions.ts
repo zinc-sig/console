@@ -19,7 +19,7 @@ interface Submission {
 
 async function submit(cookie: string, submission: Submission) {
   try {
-    const { data: { data } } = await axios({
+    const { data: { data, errors } } = await axios({
       method: 'post',
       headers: {
         cookie
@@ -36,7 +36,11 @@ async function submit(cookie: string, submission: Submission) {
         variables: { submission }
       },
     });
-    return data.createSubmission;
+    if(!errors) {
+      return data.createSubmission;
+    } else {
+      throw new Error(errors[0].message);
+    }
   } catch (error) {
     throw error;
   }

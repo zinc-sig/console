@@ -11,10 +11,10 @@ const user_1 = require("../utils/user");
 const SESSION_VALID_FOR = 8 * 60 * 60 * 1000;
 const client = redis_1.default.createClient(parseInt(process.env.REDIS_PORT, 10), process.env.REDIS_HOST);
 const config = {
-    issuerBaseURL: process.env.CAS_AUTH_BASE_URL,
-    baseURL: `https://${process.env.CONSOLE_APP_HOSTNAME}`,
-    clientID: process.env.CAS_AUTH_CONSOLE_CLIENT_ID,
-    clientSecret: process.env.CAS_AUTH_CONSOLE_CLIENT_SECRET,
+    issuerBaseURL: process.env.OIDC_BASE_URL,
+    baseURL: `https://${process.env.HOSTNAME}`,
+    clientID: process.env.OIDC_CLIENT_ID,
+    clientSecret: process.env.OIDC_CLIENT_SECRET,
     secret: process.env.SESSION_SECRET,
     authorizationParams: {
         response_type: 'code',
@@ -52,13 +52,13 @@ const config = {
         },
         absoluteDuration: SESSION_VALID_FOR,
         cookie: {
-            domain: process.env.HOSTNAME,
+            domain: process.env.HOSTNAME?.replace('console.', ''),
             secure: true,
         }
     },
     afterCallback: async (req, res, session) => {
         try {
-            const additionalUserClaims = await (0, axios_1.default)(process.env.CAS_AUTH_BASE_URL + '/profile', {
+            const additionalUserClaims = await (0, axios_1.default)(process.env.OIDC_BASE_URL + '/profile', {
                 headers: {
                     Authorization: 'Bearer ' + session.access_token
                 }
@@ -69,10 +69,10 @@ const config = {
             req.appSession.userIdentity = additionalUserClaims.data;
             const { sub, name } = additionalUserClaims.data;
             const { userId, semesterId } = await (0, user_1.getUserData)(sub, name);
-            res.cookie('semester', semesterId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
-            res.cookie('user', userId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
-            res.cookie('itsc', sub, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME}` });
-            res.cookie('client', process.env.CAS_AUTH_CONSOLE_CLIENT_ID, { maxAge: SESSION_VALID_FOR, httpOnly: true, domain: `.${process.env.HOSTNAME}` });
+            res.cookie('semester', semesterId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
+            res.cookie('user', userId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
+            res.cookie('itsc', sub, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
+            res.cookie('client', process.env.OIDC_CLIENT_ID, { maxAge: SESSION_VALID_FOR, httpOnly: true, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
         }
         catch (error) {
             throw error;

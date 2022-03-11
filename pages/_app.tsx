@@ -11,6 +11,8 @@ import "react-gh-like-diff/dist/css/diff2html.min.css";
 import "../styles/index.css"
 import { getUserRole } from '../utils/user';
 import Unauthorized from "../pages/401";
+import toast from "react-hot-toast";
+import { Notification,NotificationBody } from "../components/Notification";
 
 library.add(fad, far);
 
@@ -23,18 +25,30 @@ function ZincApp({ Component, pageProps, cookie, hasTeachingRole, isAdmin, user,
   if(!hasTeachingRole && !isAdmin) {
     return <Unauthorized/>
   }
-  return (
-    <ApolloProvider client={client}>
-      <ZincProvider
-        isAdmin={isAdmin}
-        user={user}
-        itsc={itsc}
-        semester={semester}
-      >
-        <Component {...pageProps}/>
-      </ZincProvider>
-    </ApolloProvider>
-  )
+  try {
+    return (
+      <ApolloProvider client={client}>
+        <ZincProvider
+          isAdmin={isAdmin}
+          user={user}
+          itsc={itsc}
+          semester={semester}
+        >
+          <Component {...pageProps}/>
+        </ZincProvider>
+      </ApolloProvider>
+    )
+  } catch (error: any) {
+    toast.custom((t) =>(
+      <Notification trigger={t}>
+        <NotificationBody
+          title={'Error'}
+          body={error.message}
+          success={false}
+          id={t.id} />
+      </Notification>
+    ));
+  }
 }
 
 ZincApp.getInitialProps = async ({ctx}) => {

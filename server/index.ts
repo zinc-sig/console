@@ -32,25 +32,25 @@ const port = process.env.PORT || 3000;
       res.oidc!.logout({ returnTo: process.env.POST_LOGOUT_REDIRECT_URI });
 
     });
-    server.get('/service-worker.js', (req, res) => {
-      app.serveStatic(req, res, './.next/service-worker.js')
-    });
+    // server.get('/service-worker.js', (req, res) => {
+    //   app.serveStatic(req, res, './.next/service-worker.js')
+    // });
 
-    const serviceWorkers = [
-      {
-        filename: 'service-worker.js',
-        path: './.next/service-worker.js',
-      },
-      {
-        filename: 'firebase-messaging-sw.js',
-        path: './public/fcm-sw.js',
-      },
-    ]
-    serviceWorkers.forEach(({ filename, path }) => {
-      server.get(`/${filename}`, (req, res) => {
-        app.serveStatic(req, res, path)
-      })
-    });
+    // const serviceWorkers = [
+    //   {
+    //     filename: 'service-worker.js',
+    //     path: './.next/service-worker.js',
+    //   },
+    //   {
+    //     filename: 'firebase-messaging-sw.js',
+    //     path: './public/fcm-sw.js',
+    //   },
+    // ]
+    // serviceWorkers.forEach(({ filename, path }) => {
+    //   server.get(`/${filename}`, (req, res) => {
+    //     app.serveStatic(req, res, path)
+    //   })
+    // });
 
     server.all('*', (req: Request, res: Response) => handle(req, res));
     server.listen(port, (err?: any) => {

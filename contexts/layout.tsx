@@ -1,8 +1,8 @@
 import React, { useContext, useReducer, useEffect } from "react"
-import { getMessaging, onMessage } from "firebase/messaging";
-import { firebaseCloudMessaging } from "../lib/webpush";
+// import { getMessaging, onMessage } from "firebase/messaging";
+// import { firebaseCloudMessaging } from "../lib/webpush";
 import toast, { Toaster } from "react-hot-toast";
-import { useZinc } from "./zinc"
+// import { useZinc } from "./zinc"
 import { Notification,NotificationBody } from "../components/Notification";
 
 interface LayoutAction {
@@ -123,49 +123,49 @@ export const useLayoutDispatch = () => useContext(LayoutDispatchContext);
 
 export const LayoutProvider = ({ children }: LayoutProviderProps) => {
   
-  const {user, currentSemester} = useZinc();
+  // const {user, currentSemester} = useZinc();
   const [state, dispatch] = useReducer<React.Reducer<LayoutState, LayoutAction>>(layoutReducer, initialLayoutState)
 
-  useEffect(() => {
-    setupNotification();
-    async function setupNotification() {
-      try {
-        const token = await firebaseCloudMessaging.init();
-        if(token) {
-          const messaging = getMessaging();
-          // TODO: call API to fetch lastest notification 
-          const notiRes = await fetch(`/api/notification/getNotification?&id=${user}`,{
-            method: 'GET'
-          });
-          const noti = await notiRes.json()
-          const notification = noti.notification
-          // if the fetch token is not the same as DB
-          if(token != notification){
-            // update the DB one
-            const response = await fetch(`/api/notification/update`,{
-              method: 'POST',
-              body: JSON.stringify({
-                registrationToken: token,
-                userId: user,
-                currentSemester
-              })
-            });
-          }
-          dispatch({ type: 'setRegistrationToken', payload: token });
-          onMessage(messaging, message => {
-            const {title, body} = message.data!
-            toast.custom((t) =>(
-              <Notification trigger={t}>
-                <NotificationBody title={title} body={body} success={true} id = {t.id}></NotificationBody>
-              </Notification>
-            ))
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   setupNotification();
+  //   async function setupNotification() {
+  //     try {
+  //       const token = await firebaseCloudMessaging.init();
+  //       if(token) {
+  //         const messaging = getMessaging();
+  //         // TODO: call API to fetch lastest notification 
+  //         const notiRes = await fetch(`/api/notification/getNotification?&id=${user}`,{
+  //           method: 'GET'
+  //         });
+  //         const noti = await notiRes.json()
+  //         const notification = noti.notification
+  //         // if the fetch token is not the same as DB
+  //         if(token != notification){
+  //           // update the DB one
+  //           const response = await fetch(`/api/notification/update`,{
+  //             method: 'POST',
+  //             body: JSON.stringify({
+  //               registrationToken: token,
+  //               userId: user,
+  //               currentSemester
+  //             })
+  //           });
+  //         }
+  //         dispatch({ type: 'setRegistrationToken', payload: token });
+  //         onMessage(messaging, message => {
+  //           const {title, body} = message.data!
+  //           toast.custom((t) =>(
+  //             <Notification trigger={t}>
+  //               <NotificationBody title={title} body={body} success={true} id = {t.id}></NotificationBody>
+  //             </Notification>
+  //           ))
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // }, [])
 
   return (
     <LayoutDispatchContext.Provider value={dispatch}>

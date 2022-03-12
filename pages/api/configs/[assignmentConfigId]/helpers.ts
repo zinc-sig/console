@@ -38,9 +38,11 @@ async function handleAddHelperFiles(req: NextApiRequest, res: NextApiResponse) {
 
         // move files into appropriate directory
         arrayData.forEach(async (file) => {
-            const destPath = path.join(basePath, file.name)
-            await fs.mkdir(path.dirname(destPath), { recursive: true })
-            await fs.copyFile(file.path, destPath)
+            if (file && Object.keys(file).includes("name")){
+              const destPath = path.join(basePath, file.name)
+              await fs.mkdir(path.dirname(destPath), { recursive: true })
+              await fs.copyFile(file.path, destPath)
+            }
         })
         res.json(data)
     } catch (err) {

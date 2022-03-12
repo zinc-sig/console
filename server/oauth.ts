@@ -45,7 +45,7 @@ const config: ConfigParams = {
         client.del(key, callback)
       },
     },
-    absoluteDuration: SESSION_VALID_FOR,
+    absoluteDuration: 60 * 60,
     cookie: {
       domain: process.env.HOSTNAME?.replace('console.', ''),
       secure: true,

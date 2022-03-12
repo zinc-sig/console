@@ -14,7 +14,7 @@ import { GET_ASSIGNMENT,  GET_INSTRUCTORS } from "../../../../graphql/queries/us
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_ASSIGNMENT_CONFIG, UPDATE_ASSIGNMENTCONFIG_NOTI } from "../../../../graphql/mutations/user";
 import { useZinc } from "../../../../contexts/zinc";
-import makeAnimated from 'react-select/animated';
+// import makeAnimated from 'react-select/animated';
 
 
 interface AssignmentConfig {
@@ -75,7 +75,7 @@ function AssignmentConfigCreateSuccessModalContent() {
 
 function AssignmentConfigCreation({ assignment }) {
   const router = useRouter();
-  const { validateAssignmentConfig, currentSemester } = useZinc();
+  const { validateAssignmentConfig} = useZinc();
   const dispatch = useLayoutDispatch();
   const initialConfig: AssignmentConfig = {
     assignment_id: parseInt(router.query.assignmentId as string, 10),
@@ -90,24 +90,24 @@ function AssignmentConfigCreation({ assignment }) {
   };
   const [assignmentConfig, setAssignmentConfig] = useState(initialConfig);
   // store all userID of instructors that would be receive the notification
-  const [notificationList, setNotificationList] = useState([]);
+  // const [notificationList, setNotificationList] = useState([]);
   const [createAssignmentConfig, { loading }] = useMutation(CREATE_ASSIGNMENT_CONFIG);
-  const [updateAssignmentNoti] = useMutation(UPDATE_ASSIGNMENTCONFIG_NOTI);
-  const animatedComponents = makeAnimated();
+  // const [updateAssignmentNoti] = useMutation(UPDATE_ASSIGNMENTCONFIG_NOTI);
+  // const animatedComponents = makeAnimated();
   async function handleAssignmentConfigCreation() {
     try {
       // const yaml = jsyaml.load(assignmentConfig.config_yaml);
       // setAssignmentConfig({...assignmentConfig, config_yaml: jsyaml.dump(yaml)});
-      // const { configError } = await validateAssignmentConfig(assignmentConfig.config_yaml, 'draft');
-      const validResponse = await fetch(`/api/validateConfig`,{
-        method: 'POST',
-        body: JSON.stringify({
-          id: assignmentConfig.assignment_id,
-          config_yaml: assignmentConfig.config_yaml
-        })
-      });
-      const {configError} = await validResponse.json()
-      console.log(configError)
+      const { configError } = await validateAssignmentConfig(assignmentConfig.config_yaml, 'draft');
+      // const validResponse = await fetch(`/api/validateConfig`,{
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     id: assignmentConfig.assignment_id,
+      //     config_yaml: assignmentConfig.config_yaml
+      //   })
+      // });
+      // const {configError} = await validResponse.json()
+      // console.log(configError)
       if(!configError) {
         const {data} = await createAssignmentConfig({
           variables: {
@@ -122,44 +122,46 @@ function AssignmentConfigCreation({ assignment }) {
             }
           }
         });
-        // TODO: update user record of the Assignment Config id
-        notificationList.forEach(async (id: string) => {
-          // update DB content
-          console.log(data.createAssignmentConfig.id)
-          const notiConfigUpdateResult = await updateAssignmentNoti({
-            variables: {
-              userId:id,
-              assignmentConfigId: data.createAssignmentConfig.id,
-              assignmentConfigIdForCheck: data.createAssignmentConfig.id
-            }
-          });
-          console.log(notiConfigUpdateResult)
-
-          // get registrationToken of all recevier
-          const notiRes = await fetch(`/api/notification/getNotification?&id=${id}`,{
-            method: 'GET'
-          });
-          const noti = await notiRes.json()
-          const token = noti.notification
-          console.log(token)
-
-          // subsribe them to topic
-          const response = await fetch(`/api/notification/subscription/${'i'+id+'-'+data.createAssignmentConfig.id}`,{
-            method: 'POST',
-            body: JSON.stringify({
-              registrationToken: token,
-              userId: id
-            })
-          });
-          console.log(response)
-        })
-        // success
         dispatch({ type: 'createAssignmentConfigSuccess', payload: data.createAssignmentConfig.id });
+
+        // // TODO: update user record of the Assignment Config id
+        // notificationList.forEach(async (id: string) => {
+        //   // update DB content
+        //   console.log(data.createAssignmentConfig.id)
+        //   const notiConfigUpdateResult = await updateAssignmentNoti({
+        //     variables: {
+        //       userId:id,
+        //       assignmentConfigId: data.createAssignmentConfig.id,
+        //       assignmentConfigIdForCheck: data.createAssignmentConfig.id
+        //     }
+        //   });
+        //   console.log(notiConfigUpdateResult)
+
+        //   // get registrationToken of all recevier
+        //   const notiRes = await fetch(`/api/notification/getNotification?&id=${id}`,{
+        //     method: 'GET'
+        //   });
+        //   const noti = await notiRes.json()
+        //   const token = noti.notification
+        //   console.log(token)
+
+        //   // subsribe them to topic
+        //   const response = await fetch(`/api/notification/subscription/${'i'+id+'-'+data.createAssignmentConfig.id}`,{
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //       registrationToken: token,
+        //       userId: id
+        //     })
+        //   });
+        //   console.log(response)
+        // })
+        // success
+        // dispatch({ type: 'createAssignmentConfigSuccess', payload: data.createAssignmentConfig.id });
       } else {
         dispatch({ type: 'showNotification', payload: { success: false, title: 'Config Error', message: JSON.stringify(configError)}});
       }
     } catch (error: any) {
-      console.log(error)
+      // console.log(error)
       dispatch({ type: 'showNotification', payload: { success: false, title: 'Error', message: error.message}});
     }
   }

@@ -3,10 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   purge: [],
   theme: {
-    height:{
-      "uploader":"40rem"
-    },
     extend: {
+      height:{
+        "uploader":"40rem"
+      },
       boxShadow:{
         "inner-lg" : "inset 0 5px 8px 0 rgba(0, 0, 0, 0.2)"
       },

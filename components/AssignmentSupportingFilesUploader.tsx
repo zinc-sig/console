@@ -19,8 +19,13 @@ interface CachedFile{
 
 interface ExistedFile{
     name: string
-    files: string[]
-    tree: tree
+    files: File[]
+    // tree: tree
+}
+
+interface File{
+    path: string
+    type: string
 }
 
 interface tree{
@@ -181,6 +186,10 @@ function DockingArea({files, setFiles}){
 
 function FileList({existingFiles, name}){
     // const [cachedFiles, setCachedFiles] =  useState<CachedFile[]>([])
+
+    // improve UX of deletion
+    const [existingFilesState, setExistingFilesState] = useState<File[]>(existingFiles)
+
     var cachedFiles: CachedFile[] = []
     const {provided, skeleton, template} = useFilesState()
     var description = ""
@@ -232,7 +241,7 @@ function FileList({existingFiles, name}){
                 {description}
             </div>
 
-            {[...existingFiles, ...cachedFiles].map((file)=>{
+            {[...existingFilesState, ...cachedFiles].map((file)=>{
                 if (file.size !== undefined){
                     return ({
                         deleteFile: deleteFunction,
@@ -245,7 +254,8 @@ function FileList({existingFiles, name}){
                             method: 'DELETE'
                             // body:JSON.stringify(file)
                         })
-                        layoutDispatch({ type: 'toggleModal', payload: {}});
+                        setExistingFilesState([...new Set(existingFilesState.filter(fileState => fileState.path!==file.path))])
+                        // layoutDispatch({ type: 'toggleModal', payload: {}});
                         // removeExistedFileState(file.path, name)
                     },
                     file
@@ -367,7 +377,7 @@ function AssignmentSupportingFilesUploader(){
     }
 
     return(
-        <div className="space-y-4 flex flex-col shadow-xl bg-cool-gray-50 pb-4 h-fit">
+        <div className="space-y-4 flex flex-col shadow-xl bg-cool-gray-50 pb-4 h-uploader" >
             <header className="space-y-1 py-6 bg-cse-600 sm:px-6">
                 <div className="flex items-center justify-between space-x-3">
                     <h2 className="text-lg leading-7 font-medium text-white">

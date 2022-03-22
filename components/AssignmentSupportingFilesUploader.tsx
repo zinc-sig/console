@@ -188,7 +188,7 @@ function FileList({existingFiles, name}){
     // const [cachedFiles, setCachedFiles] =  useState<CachedFile[]>([])
 
     // improve UX of deletion
-    const [existingFilesState, setExistingFilesState] = useState<File[]>(existingFiles)
+    const [existingFilesState, setExistingFilesState] = useState(existingFiles)
 
     var cachedFiles: CachedFile[] = []
     const {provided, skeleton, template} = useFilesState()
@@ -213,7 +213,6 @@ function FileList({existingFiles, name}){
     }
     setFile()
     const filesDispatch = useFilesDispatch()
-    const layoutDispatch = useLayoutDispatch()
     const addFunction = (file)=>{
         filesDispatch({ type: 'addFile', payload: {folder:name, file:file}})
         // setFile()

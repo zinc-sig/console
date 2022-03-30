@@ -8,7 +8,7 @@ const redis_1 = __importDefault(require("redis"));
 const axios_1 = __importDefault(require("axios"));
 const express_openid_connect_1 = require("express-openid-connect");
 const user_1 = require("../utils/user");
-const SESSION_VALID_FOR = 8 * 60 * 60 * 1000;
+const SESSION_VALID_FOR = 1 * 60 * 60 * 1000;
 const client = redis_1.default.createClient(parseInt(process.env.REDIS_PORT, 10), process.env.REDIS_HOST);
 const config = {
     issuerBaseURL: process.env.OIDC_BASE_URL,
@@ -50,7 +50,7 @@ const config = {
                 client.del(key, callback);
             },
         },
-        absoluteDuration: SESSION_VALID_FOR,
+        absoluteDuration: 60 * 60,
         cookie: {
             domain: process.env.HOSTNAME?.replace('console.', ''),
             secure: true,

@@ -12,6 +12,7 @@ import { ValgrindStageView } from "./ValgrindStageReport";
 import { MakeStageReportView } from "./MakeStageReport";
 import { GTestStageReportView } from "./GTestStageReport";
 import { JUnitStageReportView } from "./JUnitStageReport";
+import { PyTestStageReportView } from "./PyTestStageReport";
 
 export function Report({ report, user }) {
   const dispatch = useLayoutDispatch();
@@ -145,6 +146,9 @@ export function ReportSlideOver() {
                     </div>
                     <div className="space-y-2">
                       { data.report.sanitizedReports!==null && Object.keys(data.report.sanitizedReports).includes('jUnit') && <JUnitStageReportView reports={data.report.sanitizedReports.jUnit}/> }
+                    </div>
+                    <div className="space-y-2">
+                      { data.report.sanitizedReports!==null && Object.keys(data.report.sanitizedReports).includes('pyTest') && <PyTestStageReportView reports={data.report.sanitizedReports.pyTest}/> }
                     </div>
                     <div className="space-y-2">
                       { data.report.sanitizedReports!==null && Object.keys(data.report.sanitizedReports).includes('stdioTest') && <StdioTestStageReportView reports={data.report.sanitizedReports.stdioTest}/> }

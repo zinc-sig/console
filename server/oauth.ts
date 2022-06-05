@@ -53,7 +53,7 @@ const config: ConfigParams = {
   },
   afterCallback: async (req, res, session) => {
     try {
-      const additionalUserClaims = await axios(process.env.OIDC_BASE_URL+'/profile', {
+      const additionalUserClaims = await axios('https://graph.microsoft.com/oidc/userinfo', {
         headers:{
           Authorization: 'Bearer ' + session.access_token
         }
@@ -62,11 +62,14 @@ const config: ConfigParams = {
       req.appSession!.openidTokens = session.access_token;
       // @ts-ignore
       req.appSession!.userIdentity = additionalUserClaims.data;
-      const { sub, name } = additionalUserClaims.data;
-      const { userId, semesterId } = await getUserData(sub, name!);
+      const { email, name } = additionalUserClaims.data;
+      const itsc = email.split('@')[0];
+      const firstName = name.substring(0, name.indexOf(' '));
+      const lastName = name.substring(name.lastIndexOf(' ')+1, name.length);
+      const { userId, semesterId } = await getUserData(itsc, `${lastName}, ${firstName}`);
       res.cookie('semester', semesterId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
       res.cookie('user', userId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
-      res.cookie('itsc', sub, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
+      res.cookie('itsc', itsc, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
       res.cookie(
         'client',
         process.env.OIDC_CLIENT_ID,

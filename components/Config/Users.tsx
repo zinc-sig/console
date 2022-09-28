@@ -38,7 +38,7 @@ function AssignedStudents({ assignmentConfigId, assignedUserIds, section, }) {
           assignedStudents.map(({ user }) => (
             <li key={user.id} className="flex justify-between items-center px-2">
               <span className="text-xs font-medium">
-                {user.name||'Never Logged In'}
+                {user.name||user.itsc}
               </span>
               <span className="inline-flex rounded-lg shadow-sm">
                 <button
@@ -96,7 +96,7 @@ function UnassignedStudents({ section, assignedUserIds, assignmentConfigId }) {
         unassignedStudents.map(({ user }) => (
           <li key={user.id} className="flex justify-between items-center px-2">
             <span className="text-xs font-medium">
-              {user.name||'Never Logged In'}
+              {user.name||user.itsc}
             </span>
             <span className="inline-flex rounded-lg shadow-sm">
               <button

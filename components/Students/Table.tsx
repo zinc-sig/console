@@ -34,7 +34,7 @@ export function Students({ students }) {
                   <td className="max-w-0 w-full px-6 py-4 whitespace-no-wrap text-sm leading-5 text-cool-gray-900">
                     <div className="flex">
                       <p className="text-cool-gray-500 truncate group-hover:text-cool-gray-900 transition ease-in-out duration-150">
-                          {student.name??'Never Logged In'}
+                          {student.name??student.itsc}
                       </p>
                     </div>
                   </td>

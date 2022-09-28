@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLayoutDispatch } from "../contexts/layout";
-import { Toast } from "react-hot-toast/dist/core/types";
+import { Toast } from "react-hot-toast";
 
 
 interface NotificationProps {

@@ -9,7 +9,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   NEXT_PUBLIC_UPLOAD_DIR: ${{ secrets.NEXT_PUBLIC_UPLOAD_DIR }}
   NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
-  NPM_TOKEN: ${{ secrets.FA_REGISTRY_AUTH_TOKEN }}
 
 jobs:
   build-and-push-image:
@@ -48,4 +47,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest, ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.sha_short }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NPM_TOKEN=${{ secrets.FA_REGISTRY_AUTH_TOKEN }}
 

@@ -76,14 +76,16 @@ export function AssignmentSlideOverContent() {
                 All Submissions
               </a>
             </Link>
-            <button 
+            {
+              !loading && (<button 
               onClick={() => {
-                dispatch({ type: 'confirmRegrading', payload: { assignmentConfigId: config.id, submissions: data.assignmentConfig.submissions.filter(submssion => submssion.reports.length==0).map(submission => submission.id) }})
+                dispatch({ type: 'confirmRegrading', payload: { assignmentConfigId, submissions: data.assignmentConfig.submissions.filter(submssion => submssion.reports.length==0).map(submission => submission.id) }})
               }}
               className="-ml-px flex-1 justify-center relative inline-flex items-center px-2 py-2 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
             >
               Regrade Ungraded Submissions
-            </button>
+            </button>)
+            }
             <Link href={`/api/download/grades?assignmentConfigId=${assignmentConfigId}${viewingTaskAssignedGroups?`&viewingTaskAssignedGroups=${viewingTaskAssignedGroups}`:''}`}>
               <a className="-ml-px flex-1 justify-center relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150">
                 <FontAwesomeIcon className="mr-2" icon={['fad', 'file-spreadsheet']}/>

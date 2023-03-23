@@ -54,7 +54,7 @@ function SelectMenu({ semesters=[] }: SemesterSelectMenuProps) {
             leaveTo="transform opacity-0 scale-95"
             className="absolute mt-1 w-52 rounded-md bg-white shadow-lg"
           >
-              <Menu.Items as="ul" tabIndex={-1}
+              <Menu.Items as="ul"
                 role="listbox"
                 aria-labelledby="listbox-label"
                 aria-activedescendant="listbox-item-3"

@@ -34,9 +34,7 @@ function SelectMenu({ semesters=[] }: SemesterSelectMenuProps) {
       </label>
       <div className="relative">
         <Menu>
-          <Menu.Button aria-haspopup="listbox"
-              aria-expanded="true"
-              aria-labelledby="listbox-label"
+          <Menu.Button
               className="cursor-default relative w-full rounded-md border border-gray-300 bg-white pl-3 pr-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
             <span className="block truncate">
                 { semesters.find(semester => semester.id===activeSemester)?.name }
@@ -55,9 +53,6 @@ function SelectMenu({ semesters=[] }: SemesterSelectMenuProps) {
             className="absolute mt-1 w-52 rounded-md bg-white shadow-lg"
           >
               <Menu.Items as="ul"
-                role="listbox"
-                aria-labelledby="listbox-label"
-                aria-activedescendant="listbox-item-3"
                 className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5">
                 {
                   semesters.map((semester) => (
@@ -92,8 +87,6 @@ function MenuOption ({ title, selected, href }: MenuOptionProps) {
       onMouseLeave={() => setHighlighted(false)}
     >
       <Menu.Item as="li"
-      id="listbox-option-0"
-      role="option"
       className={`${highlighted?'text-white bg-cse-600':'text-gray-900'} cursor-pointer select-none relative py-2 pl-3 pr-9`}>
         <Link href={href.includes('//')?href.replace('//', '/'):href}>
           <span className={`${selected?'font-semibold':'font-normal'} block truncate transition duration-150 ease-in-out`}>

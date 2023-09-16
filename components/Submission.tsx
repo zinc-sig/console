@@ -15,7 +15,6 @@ export function Submission({ submission }) {
   }
 
   const submittedDate = new Date(submission.created_at);
-  submittedDate.setTime(submittedDate.getTime()+8*60*60*1000);
   return (
     <li>
       <ul>

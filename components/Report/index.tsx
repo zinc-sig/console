@@ -17,7 +17,6 @@ import { PyTestStageReportView } from "./PyTestStageReport";
 export function Report({ report, user }) {
   const dispatch = useLayoutDispatch();
   const reportGeneratedDate = new Date(report.createdAt);
-  reportGeneratedDate.setTime(reportGeneratedDate.getTime()+8*60*60*1000);
   // const stageCount = Object.keys(report.pipeline_results.stageReports).length
   // const errorCount = Object.keys(report.pipeline_results).filter(entity => entity.includes('Error')&&report.pipeline_results[entity]).length
   const now = new Date()

@@ -107,7 +107,7 @@ export function AssignmentSlideOverContent() {
             </div>
             <ul className="divide-y divide-gray-200 overflow-y-auto">
               {
-                !loading && data.assignmentConfig.submissions.sort((a,b) => (a.user.name>b.user.name)?1:-1).map(submission => (
+                !loading && data.assignmentConfig.submissions.map(submission => (
                   <IndividualSubmissionRow key={submission.id} submission={submission} assignmentConfigId={assignmentConfigId}/>
                 ))
               }

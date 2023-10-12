@@ -14,8 +14,7 @@ export function Submission({ submission }) {
     dispatch({ type: 'confirmRegrading', payload: { assignmentConfigId, submissions: [submission.id] } });
   }
 
-  const submittedDate = new Date(submission.created_at);
-  submittedDate.setTime(submittedDate.getTime()+8*60*60*1000);
+  const submittedDate = new Date(`${submission.created_at}Z`);
   return (
     <li>
       <ul>

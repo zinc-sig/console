@@ -34,7 +34,7 @@ export function Report({ report, user }) {
               Auto Grader graded { user.name }&apos;s submission on 
               <span
                 className="ml-1">
-                { `${date} at ${reportGeneratedDate.toLocaleTimeString().toLocaleLowerCase()}` }
+                { `${date} at ${reportGeneratedDate.toLocaleTimeString("en-US", { hour12: false, timeZone: "Asia/Hong_Kong" })}` }
                 { report.is_final && (
                   <FontAwesomeIcon  className="ml-2 text-green-400" icon={['fad', 'badge-check']} size="lg"/>
                 ) }

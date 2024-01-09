@@ -64,8 +64,8 @@ const config: ConfigParams = {
       req.appSession!.userIdentity = additionalUserClaims.data;
       const { email, name } = additionalUserClaims.data;
       const [itsc, domain] = email.split('@');
-      const firstName = name.substring(0, name.lastIndexOf(' '));
-      const lastName = name.substring(name.lastIndexOf(' ')+1, name.length);
+      const firstName = name.split(' ').filter((segment) => !/^[A-Z]+$/.test(segment)).join(' ');
+      const lastName = name.split(' ').filter((segment) => /^[A-Z]+$/.test(segment)).join(' ');
       const { userId, semesterId } = await getUserData(itsc, `${lastName}, ${firstName}`);
       res.cookie('semester', semesterId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });
       res.cookie('user', userId, { maxAge: SESSION_VALID_FOR, httpOnly: false, domain: `.${process.env.HOSTNAME?.replace('console.', '')}` });

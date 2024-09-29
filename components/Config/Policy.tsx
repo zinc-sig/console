@@ -50,7 +50,7 @@ export function PolicyConfig({ policy, onChange }) {
               onChange={(e) => updatePolicy({ gradeImmediately: e.target.checked })}
               id="gradeImmediately"
               type="checkbox"
-              className="form-checkbox h-4 w-4 text-cse-600 transition duration-150 ease-in-out"/>
+              className="form-checkbox h-4 w-4 text-cse-600 border border-gray-200 rounded transition duration-150 ease-in-out"/>
           </div>
           <div className="ml-3 text-sm leading-5">
             <label htmlFor="gradeImmediately" className="font-medium text-gray-700">Grade Immediately</label>
@@ -65,7 +65,7 @@ export function PolicyConfig({ policy, onChange }) {
                 onChange={(e) => updatePolicy({ showImmediateScores: e.target.checked })}
                 id="showImmediateScores"
                 type="checkbox"
-                className="form-checkbox h-4 w-4 text-cse-600 transition duration-150 ease-in-out"/>
+                className="form-checkbox h-4 w-4 text-cse-600 border border-gray-200 rounded transition duration-150 ease-in-out"/>
             </div>
             <div className="ml-3 text-sm leading-5">
               <label htmlFor="showImmediateScores" className="font-medium text-gray-700">Reveal Grading Details</label>

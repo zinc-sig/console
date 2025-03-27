@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { withSentry } from "@sentry/nextjs";
 import { lstatSync, readdirSync, moveSync, removeSync } from "fs-extra";
 import dirTree from "directory-tree"
 import formidable from "formidable-serverless";
@@ -243,7 +242,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withSentry(handler);
+export default handler;
 
 export const config = {
   api: {

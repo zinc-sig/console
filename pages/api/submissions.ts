@@ -1,4 +1,3 @@
-import { withSentry } from "@sentry/nextjs";
 import type { NextApiRequest, NextApiResponse } from "next"
 import { copyFile } from "fs";
 import formidable from "formidable-serverless";
@@ -108,7 +107,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withSentry(handler);
+export default handler;
 
 export const config = {
   api: {

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { withSentry } from "@sentry/nextjs";
 import axios from "axios";
 import { Workbook } from "exceljs";
 
@@ -113,7 +112,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withSentry(handler);
+export default handler;
 
 export const config = {
   api: {

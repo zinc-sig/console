@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { withSentry } from "@sentry/nextjs";
 import redis from "redis";
 import { v4 as uuidv4 } from "uuid";
 
@@ -33,7 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withSentry(handler);
+export default handler;
 
 export const config = {
   api: {

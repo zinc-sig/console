@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { withSentry } from "@sentry/nextjs";
 import { existsSync, readFileSync } from "fs";
 import axios from "axios";
 import AdmZip from "adm-zip";
@@ -41,7 +40,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withSentry(handler);
+export default handler;
 
 export const config = {
   api: {

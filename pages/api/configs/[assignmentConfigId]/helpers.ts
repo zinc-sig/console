@@ -19,7 +19,7 @@ async function handleAddHelperFiles(req: NextApiRequest, res: NextApiResponse) {
     // await fs.rm(basePath, { recursive: true, force: true })
     // await fs.mkdir(basePath, { recursive: true })
 
-    const form = formidable({ multiples: true })
+    const form = formidable({ multiples: true, maxFileSize: 1024 * 1024 * 1024 })
 
     try {
         // parse form data

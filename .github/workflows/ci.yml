@@ -2,7 +2,7 @@ name: Publish Image
 
 on:
   push:
-    branches: ['master']
+    branches: ["master"]
 
 env:
   NEXT_PUBLIC_UPLOAD_DIR: ${{ secrets.NEXT_PUBLIC_UPLOAD_DIR }}
@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Set outputs
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
@@ -34,12 +34,12 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@v5
         with:
           images: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -47,4 +47,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             NPM_TOKEN=${{ secrets.FA_REGISTRY_AUTH_TOKEN }}
-

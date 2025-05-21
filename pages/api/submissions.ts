@@ -52,7 +52,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       multiples: true,
       hash: 'sha256',
       keepExtensions: true,
-      encoding: 'utf-8'
+      encoding: 'utf-8',
+      maxFileSize: 1024 * 1024 * 1024
     });
     form.parse(req, async (err, fields, { files }) => {
       if(err) {

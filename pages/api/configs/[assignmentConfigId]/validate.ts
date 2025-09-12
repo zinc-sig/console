@@ -4,15 +4,13 @@ import redis from "redis";
 import { v4 as uuidv4 } from "uuid";
 
 const port = parseInt(process.env.REDIS_PORT!, 10);
-const topic = `configValidated`;
-const subscriber = redis.createClient(port, process.env.REDIS_HOST!);
-const publisher = redis.createClient(port, process.env.REDIS_HOST!);
-
-subscriber.subscribe(topic);
-
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method!.toLowerCase() === 'post') {
+      const topic = `configValidated`;
+      const subscriber = redis.createClient(port, process.env.REDIS_HOST!);
+      const publisher = redis.createClient(port, process.env.REDIS_HOST!);
+      subscriber.subscribe(topic);
       const { yaml } = req.body;
       const id = uuidv4();
       publisher.publish(`validateConfig`, JSON.stringify({
@@ -22,6 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       subscriber.on(`message`, (channel, message) => {
         const payload = JSON.parse(message);
         if (channel===topic && payload.id===id) {
+          subscriber.unsubscribe(topic);
           return res.json(payload);
         }
       });
